@@ -1,58 +1,98 @@
-# Ex6 Dequeue Elements from Circular Queue
-## DATE:
-## AIM:
-To write a C program to delete three elements from the filled circular queue.
+# Ex6 Right Rotation LinkedList
 
+## AIM:
+To write a Java  program to:
+Create a singly linked list.
+Rotate the linked list to the right by k positions.
+Display the rotated linked list.
 ## Algorithm
-1. Start the program.
-2. Define a queue with a fixed size SIZE and initialize front and rear pointers.
-3. Define the deQueue() function to remove and return an element from the front of the queue.
-4. Check if the queue is empty using isEmpty(); if empty, print an error message.
-5. If the queue has one element, reset both front and rear to -1.
-6. If the queue has more than one element, update front to the next index using modulo operation ((front + 1) % SIZE).
-7. Return the removed element from the front of the queue.
-8.End the program.
+1.Traverse the list to find its length and connect the last node to the head (make it circular).
+
+2.Compute k = k % length to adjust rotations.
+
+3.Calculate steps = length - k to locate the new head position.
+
+4.Move steps times to find the new tail.
+
+5.Set newHead = newTail.next and break the circle by making newTail.next = null.
+
+   
 
 ## Program:
 ```
 /*
-Program to delete three elements from the filled circular queue
-Developed by:levaku lakshmi mounika
+Program to  Right Rotation LinkedList
+Developed by: LEVAKU LAKSHMI MOUNIKA
 RegisterNumber: 212223100026
-*/
-/*#include <stdio.h> 
-#define SIZE 5 
-int items[SIZE]; 
-int front = -1, rear = -1; 
-*/ 
-int deQueue() 
-{ 
-int element; 
-element=items[front]; 
-if(isEmpty()) 
-{ 
-printf("Queue is Empty!!"); 
-} 
-else 
-{ 
-if(front==rear) 
-{ 
-front=-1; 
-rear=-1; 
-} 
-else 
-{ 
-front=(front+1)%SIZE; 
-} 
-} 
-return element; 
+
+import java.util.Scanner;
+public class RotateLinkedList {
+    public static Node rotate(Node head, int k) {
+        if (head == null || head.next == null || k == 0) {
+            return head;
+        }
+        Node current = head;
+        int length = 1;
+        while (current.next != null) {
+            current = current.next;
+            length++;
+        }
+        current.next = head;
+        k = k % length;
+        int stepsToNewHead = length - k;
+        Node newTail = current;
+        while (stepsToNewHead-- > 0) {
+            newTail = newTail.next;
+        }
+        Node newHead = newTail.next;
+        newTail.next = null;
+        return newHead;
+    }
+    public static void display(Node head) {
+        Node current = head;
+        System.out.print("LinkedList: ");
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Node head = null, tail = null;
+        int n = scanner.nextInt();
+        for (int i = 0; i < n; i++) {
+            Node newNode = new Node(scanner.nextInt());
+            if (head == null) {
+                head = tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
+        }
+        int k = scanner.nextInt();
+        head = rotate(head, k);
+        display(head);
+        scanner.close();
+    }
 }
+class Node {
+    int data;
+    Node next;
+    Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+*/
 ```
 
 ## Output:
+<img width="877" height="214" alt="image" src="https://github.com/user-attachments/assets/f794cfb7-7043-49e9-96ef-ae58df87023e" />
 
-![image](https://github.com/user-attachments/assets/533e89ac-3e03-4adc-bb37-d4748af84ae4)
+
 
 
 ## Result:
-Thus, the C program to delete three elements from the filled circular queue is implemented successfully.
+Thus, the Java program to perfom right rotation on linked list is implemented successfully.
