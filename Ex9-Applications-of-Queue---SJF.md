@@ -1,89 +1,78 @@
-# Ex9 Applications of Queue - SJF
-## DATE:
+# Ex9 Finding the Longest Length of Nested Set in a Permutation Array
+
 ## AIM:
-To incorporate the code to calculate the Total Waiting Time and Average Waiting Time in Shortest Job First scheduling algorithm.
+To write a program that finds the length of the longest set s[k] defined as s[k] = { nums[k], nums[nums[k]], nums[nums[nums[k]]], … },where the iteration stops before a duplicate element occurs.
+
+The task is to return the maximum size among all such sets.
 ## Algorithm
-1. Start the program.
-2. Read the number of processes n and their burst times into the array bt[].
-3. Assign process numbers to array p[] (from 1 to n).
-4. Sort the processes based on burst time using selection sort, updating both bt[] and p[] arrays.
-5. Calculate the waiting time wt[] for each process by summing burst times of previous processes.
-6. Calculate the turnaround time tat[] as the sum of burst time and waiting time for each process.
-7. Compute and print the average waiting time and average turnaround time.
-8. End the program. 
+1. For each index i, start a new chain beginning at nums[i].
+
+2.Follow the chain by repeatedly jumping to nums[j] until a repeated value is found.
+
+3.Keep track of visited elements in the current chain.
+
+4.Update the maximum chain length found so far.
+
+5.Clear the chain and repeat for all starting indices.
+
 
 ## Program:
 ```
 /*
-Program to find the Total Waiting Time and Average Waiting Time in Shortest Job First scheduling algorithm.
-Developed by: levaku lakshmi mounika
+Program to find the Longest Length of Nested Set in a Permutation Array
+Developed by: LEVAKU LAKSHMI MOUNIKA
 RegisterNumber: 212223100026
-*/
-/*
-#include<stdio.h> 
-int main() 
-{ 
-int bt[20],p[20],wt[20],tat[20],i,j,n,total=0,pos,temp; 
-float avg_wt,avg_tat; 
-scanf("%d",&n); 
-for(i=0;i<n;i++) 
-{ 
-scanf("%d",&bt[i]); 
-p[i]=i+1; 
-} 
-for(i=0;i<n;i++) 
-{ 
-pos=i; 
-for(j=i+1;j<n;j++) 
-{ 
-if(bt[j]<bt[pos]) 
-pos=j; 
-} 
-  
-  
- 
-temp=bt[i]; 
-bt[i]=bt[pos]; 
-bt[pos]=temp; 
- 
-temp=p[i]; 
-p[i]=p[pos]; 
-p[pos]=temp; 
-} 
- 
-wt[0]=0; 
-for(i=1;i<n;i++) 
-{ 
-wt[i]=0; 
-for(j=0;j<i;j++) 
-wt[i]+=bt[j]; 
-total+=wt[i]; 
-} 
- 
-avg_wt=(float)total/n; 
-total=0; 
-printf("Process Burst Time Waiting Time Turnaround Time\n"); 
-for(i=0;i<n;i++) 
-{ 
-tat[i]=bt[i]+wt[i]; //calculate turnaround time 
-total+=tat[i]; 
-//printf("\n"); 
-printf("p%d %d %d %d\n",p[i],bt[i],wt[i],tat[i]); 
-} 
- 
-avg_tat=(float)total/n; //average turnaround time 
-// printf("\n"); 
-printf("Average Waiting Time=%f\n",avg_wt); 
-// printf("\n"); 
-printf("Average Turnaround Time=%f\n",avg_tat); 
-return 0; 
+import java.util.*;
+public class ArrayNestingMain {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine().trim();
+        input = input.replace("nums =", "").replace("[", "").replace("]", "").trim();
+        String[] parts = input.split(",");
+        int[] nums = new int[parts.length];
+
+        for (int i = 0; i < parts.length; i++) {
+            nums[i] = Integer.parseInt(parts[i].trim());
+        }
+        Solution sol = new Solution();
+        int result = sol.arrayNesting(nums);
+        System.out.println(result);
+        sc.close();
+    }
 }
+class Solution {
+    public int arrayNesting(int[] nums) {
+        ArrayList<Integer> com = new ArrayList<>();
+        int maxlen = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            int j = nums[i];
+            com.add(j);
+            while (true) {
+                if (!com.contains(nums[j])) {
+                    com.add(nums[j]);
+                    j = nums[j];
+                } else {
+                    break;
+                }
+            }
+            if (com.size() > maxlen) {
+                maxlen = com.size();
+            }
+            com.clear();
+        }
+        return maxlen;
+    }
+}
+
+
+*/
 ```
 
 ## Output:
-![image](https://github.com/user-attachments/assets/824b3a1a-fbff-4a88-8628-ed7c21ebd070)
+<img width="897" height="166" alt="image" src="https://github.com/user-attachments/assets/621801a3-4c2b-468d-a845-d131b29278d6" />
 
 
 
 ## Result:
-Thus, the code to calculate the Total Waiting Time and Average Waiting Time in Shortest Job First scheduling algorithm is implemented successfully.
+The program successfully computes the longest length of the nested set s[k] for the given permutation array.
